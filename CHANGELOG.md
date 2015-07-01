@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file. This change
 - Add docstring for `rethinkdb.core/close`. [#44](https://github.com/apa512/clj-rethinkdb/pull/44)
 - Add alias for `rethinkdb.core/connect` into `rethinkdb.query/connect` so you don't need to import the `rethinkdb.core` namespace. [#44](https://github.com/apa512/clj-rethinkdb/pull/44)
 - Add CHANGELOG.md [#47](https://github.com/apa512/clj-rethinkdb/pull/47)
+- Add core.async channel API for executing queries [#37](https://github.com/apa512/clj-rethinkdb/pull/37)
 
 ### Changed
 - Add new arity for the queries `table-drop`, and `table-list` which doesn't require a db. [#54](https://github.com/apa512/clj-rethinkdb/pull/54/files)

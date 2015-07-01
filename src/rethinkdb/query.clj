@@ -17,7 +17,6 @@
             [rethinkdb.net :as net]
             [rethinkdb.core :as core]
             [rethinkdb.query-builder :as qb :refer [term]]))
-  (:import (rethinkdb.core Connection)))
 
 (defmacro fn [args & [body]]
   (let [new-args (into [] (clojure.core/map #(hash-map :temp-var (keyword %)) args))
