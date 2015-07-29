@@ -105,7 +105,7 @@
                 (concat query [{:db [(types/tt->int :DB) [db]]}])
                 query)
         json (json/write-str query)
-        {type :t resp :r} (send-query* conn token json)
+        {type :t resp :r etype :e} (send-query* conn token json)
         resp (parse-response resp)]
     (condp get type
       #{1} (first resp) ;; Success Atom, Query returned a single RQL datatype
@@ -117,7 +117,21 @@
                (do
                  (swap! (:conn conn) update-in [:waiting] #(conj % token))
                  (Cursor. conn token resp)))
-      (throw (Exception. (str (first resp)))))))
+      #{16} (ex-info (first resp) {:type :client})
+      #{17} (ex-info (first resp) {:type :compile})
+      #{18} (throw (ex-info
+                    (first resp)
+                    {:type
+                     (condp get etype
+                       #{1000000} :internal
+                       #{2000000} :resource
+                       #{3000000} :logic
+                       #{3100000} :non-existence
+                       #{4100000} :op-failed
+                       #{4200000} :op-indeterminate
+                       #{5000000} :user
+                       :unknown)}))
+      (throw (ex-info (first resp) {:type :unknown})))))
 
 (defn send-start-query [conn token query]
   (send-query conn token (parse-query :START query)))
