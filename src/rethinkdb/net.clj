@@ -124,8 +124,8 @@
                     {:type
                      (condp get etype
                        #{1000000} :internal
-                       #{2000000} :resource
-                       #{3000000} :logic
+                       #{2000000} :resource-limit
+                       #{3000000} :query-logic
                        #{3100000} :non-existence
                        #{4100000} :op-failed
                        #{4200000} :op-indeterminate
